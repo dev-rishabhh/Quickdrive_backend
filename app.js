@@ -36,6 +36,6 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(process.env.PORT, () => {
-    console.log("server statred on :", process.env.PORT);
+    console.log("server statred at :", process.env.PORT);
 })
 
