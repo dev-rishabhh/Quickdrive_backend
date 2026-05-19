@@ -16,6 +16,8 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
+console.log(process.env.FRONTEND_URL);
+
 app.use(cors({
     origin: process.env.FRONTEND_URL,
     credentials: true
@@ -36,6 +38,6 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(process.env.PORT, () => {
-    console.log("server statred at :", process.env.PORT);
+    console.log("server statred on:", process.env.PORT);
 })
 
