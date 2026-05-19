@@ -19,7 +19,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET))
 console.log(process.env.FRONTEND_URL);
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "https://quickdrive-frontend.vercel.app",
     credentials: true
 }))
 
