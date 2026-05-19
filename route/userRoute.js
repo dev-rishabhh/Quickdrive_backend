@@ -15,9 +15,9 @@ import {
 
 const router = express.Router()
 
-router.get("/",(req,res)=>{
-    res.json("hello world")
-})
+// router.get("/",(req,res)=>{
+//     res.json("hello world")
+// })
 
 router.get("/user", checkAuth, checkNotDeleted, handleGetUser)
 router.get("/users", checkAuth,checkNotDeleted, checkNotRegularUser, handleGetAllUsers)

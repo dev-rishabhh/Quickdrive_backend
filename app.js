@@ -16,10 +16,10 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
-console.log(process.env.FRONTEND_URL);
+// console.log(process.env.FRONTEND_URL);
 
 app.use(cors({
-    origin: "https://quickdrive-frontend.vercel.app",
+    origin: process.env.FRONTEND_URL,
     credentials: true
 }))
 

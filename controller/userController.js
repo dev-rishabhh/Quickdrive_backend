@@ -96,7 +96,8 @@ export async function handleLoginUser(req, res) {
             uid: user._id
         })
         res.cookie("token", insertedSession._id, {
-            sameSite: "lax",
+            // sameSite: "lax",
+            sameSite: "none",
             httpOnly:true,
             maxAge: 3600 * 1000 * 24,
             signed: true,
