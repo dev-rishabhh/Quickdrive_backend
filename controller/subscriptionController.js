@@ -1,9 +1,10 @@
 import Razorpay from "razorpay"
 import { subscriptionModel } from "../model/subscriptionModel.js";
+import { userModel } from "../model/userModel.js";
 
 const rzpInstance = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY,
-    key_secret: process.env.RAZORPAY_SECRET,
+  key_id: process.env.RAZORPAY_KEY,
+  key_secret: process.env.RAZORPAY_SECRET,
 });
 
 export const PLANS = {
@@ -30,29 +31,48 @@ export const PLANS = {
 
 
 export async function handleSubscriptionInitiate(req, res, next) {
-    const planId = req.body.planId
-    const {storageQuotaBytes} =  PLANS[planId]
+  const planId = req.body.planId
+  const { storageQuotaBytes } = PLANS[planId]
 
-    try {
-        const newSubscription = await rzpInstance.subscriptions.create({
-            plan_id: planId,
-            total_count: 120,
-            notes: {
-                userId: req.user.id,
-            },
-        });
+  try {
+    const newSubscription = await rzpInstance.subscriptions.create({
+      plan_id: planId,
+      total_count: 120,
+      notes: {
+        userId: req.user.id,
+      },
+    });
 
-        const subscription = new subscriptionModel({
-            razorpaySubscriptionId: newSubscription.id,
-            storageQuotainBytes : storageQuotaBytes,
-            userId: req.user.id
-        })
+    const subscription = new subscriptionModel({
+      razorpaySubscriptionId: newSubscription.id,
+      storageQuotainBytes: storageQuotaBytes,
+      userId: req.user.id
+    })
 
-        await subscription.save()
+    await subscription.save()
 
-        return res.json({ subscriptionId: newSubscription.id })
-    } catch (error) {
-        console.log(error);
-        next(error)
-    }
+    return res.json({ subscriptionId: newSubscription.id })
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+}
+export async function handleSubscriptionComplete(req, res, next) {
+  const subscriptionId = req.body.subscriptionId
+
+  try {
+    const subscription = await subscriptionModel.findOne({ razorpaySubscriptionId: subscriptionId });
+    subscription.status = "active"
+    await subscription.save()
+
+    const user = await userModel.findOne({ _id: subscription.userId })
+    user.maxStorageinBytes += subscription.storageQuotainBytes
+    await user.save();
+
+    res.json({ message: "Payment verified" });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
 }

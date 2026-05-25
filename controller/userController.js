@@ -6,7 +6,7 @@ import { fileModel } from "../model/fileModel.js";
 import { loginSchema, registerSchema } from "../validators/authValidator.js";
 
 export async function handleGetUser(req, res) {
-    console.log("User route called");
+    // console.log("User route called");
     
     const rootDir = await directoryModel.findOne({_id: req.user.rootDirId})
     res.status(200).json({
