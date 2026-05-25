@@ -1,6 +1,5 @@
 import Razorpay from "razorpay"
 import { subscriptionModel } from "../model/subscriptionModel.js";
-import { userModel } from "../model/userModel.js";
 
 const rzpInstance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY,
@@ -33,7 +32,6 @@ export const PLANS = {
 export async function handleSubscriptionInitiate(req, res, next) {
     const planId = req.body.planId
     const {storageQuotaBytes} =  PLANS[planId]
-    // console.log(typeof storageQuotaBytes)
 
     try {
         const newSubscription = await rzpInstance.subscriptions.create({
@@ -55,32 +53,6 @@ export async function handleSubscriptionInitiate(req, res, next) {
         return res.json({ subscriptionId: newSubscription.id })
     } catch (error) {
         console.log(error);
-        next(error)
-    }
-}
-
-export async function handleSubscriptionComplete(req, res, next) {
-    const subscriptionId = req.body.razorpay_subscription_id
-    // console.log(planId)
-
-    try {
-        const subscription = await subscriptionModel.findOne({id: subscriptionId})
-        // console.log(subscription);
-
-        subscription.status = "active"
-        await subscription.save()
-
-        // console.log(Long.fromNumber(subscription.storageQuotainBytes))
-        const user = await userModel.findOne({_id : subscription.userId})
-        // console.log(user);
-        
-        user.maxStorageinBytes += subscription.storageQuotainBytes
-        await user.save()
-        res.json({message : "Payment verified. Storage upgraded"})
-
-    } catch (error) {
-        console.log(error);
-
         next(error)
     }
 }
