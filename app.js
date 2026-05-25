@@ -6,6 +6,9 @@ import directoryRoutes from "./route/directoryRoute.js"
 import fileRoutes from "./route/fileRoute.js"
 import userRoutes from "./route/userRoute.js"
 import authRoutes from "./route/authRoute.js"
+
+import webhookRoutes from "./route/webhookRoute.js"
+
 import subscriptionRoutes from "./route/subscriptionRoute.js"
 
 import { checkAuth, checkNotDeleted } from "./middleware/auth.js";
@@ -27,6 +30,7 @@ app.use(cors({
 app.use("/directory", checkAuth, checkNotDeleted, directoryRoutes)
 app.use("/file", checkAuth, checkNotDeleted, fileRoutes)
 app.use("/subscriptions", checkAuth, subscriptionRoutes)
+app.use("/webhook", webhookRoutes)
 app.use("/", userRoutes)
 app.use("/auth", authRoutes)
 
