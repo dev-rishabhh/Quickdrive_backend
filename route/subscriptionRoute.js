@@ -5,6 +5,6 @@ import { handleSubscriptionComplete, handleSubscriptionInitiate } from "../contr
 const router = express.Router()
 
 router.post("/", handleSubscriptionInitiate)
-router.post("/complete", handleSubscriptionComplete)
+// router.post("/complete", handleSubscriptionComplete)
 
 export default router
