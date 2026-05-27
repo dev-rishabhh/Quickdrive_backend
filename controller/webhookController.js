@@ -4,8 +4,8 @@ import { userModel } from "../model/userModel.js";
 
 
 export async function handleRazorpayWebhook(req, res) {
-  console.log("Running webhook")
-  console.log(req.body);
+  // console.log("Running webhook")
+  // console.log(req.body);
   
   const signature = req.headers["x-razorpay-signature"];
   const isSignatureValid = Razorpay.validateWebhookSignature(
@@ -14,7 +14,7 @@ export async function handleRazorpayWebhook(req, res) {
     process.env.RAZORPAY_WEBHOOK_SECRET
   );
   if (isSignatureValid) {
-    console.log("Signature verified");
+    // console.log("Signature verified");
 
     if (req.body.event === "subscription.activated") {
       const rzpSubscription = req.body.payload.subscription.entity;
@@ -35,7 +35,7 @@ export async function handleRazorpayWebhook(req, res) {
       user.maxStorageInBytes += subscription.storageQuotainBytes;
       await user.save();
 
-      console.log("subscription activated");
+      // console.log("subscription activated");
     }
   } else {
     console.log("Signature not verified");

@@ -34,13 +34,13 @@ app.use("/", userRoutes)
 app.use("/auth", authRoutes)
 
 app.use((err, req, res, next) => {
-    console.log(err);
+    // console.log(err);
     // res.status(err.status || 500).json({ error: err});
     res.status(err.status || 500).json({ error: "Something went wrong!" });
     next()
 })
 
 app.listen(process.env.PORT, () => {
-    console.log("server statred on:", process.env.PORT);
+    console.log("server started");
 })
 

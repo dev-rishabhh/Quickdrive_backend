@@ -119,9 +119,9 @@ export async function handleUploadInitiate(req, res, next) {
         // console.log(fileId);
 
         const key = `${fileId}${ext}`;
-        console.log(key);
+        // console.log(key);
 
-        console.log(req.body.contentType);
+        // console.log(req.body.contentType);
         // await getAllBuckets()
 
         const url = await generatePOSTURL({ key: key, contentType: req.body.contentType })
@@ -150,7 +150,8 @@ export async function handleUploadComplete(req, res, next) {
 
         if (file.size !== fileSize) {
             await file.deleteOne()
-            console.log("File Size does not match");
+            // console.log("File Size does not match");
+            return res.status(413).json({message :"File Size does not match"})
         }
 
         file.isUploading = false

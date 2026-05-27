@@ -44,7 +44,7 @@ export async function generateGETURL({ key, download = false, filename }) {
 }
 
 export async function verifyPostData({ key }) {
-  console.log("key:", key);
+  // console.log("key:", key);
 
 
   const command = new HeadObjectCommand({
@@ -58,7 +58,7 @@ export async function verifyPostData({ key }) {
 }
 
 export async function deleteS3File({ key }) {
-  console.log("key:", key);
+  // console.log("key:", key);
 
   const command = new DeleteObjectCommand({
     Bucket: "quickdrive-app",
@@ -69,7 +69,7 @@ export async function deleteS3File({ key }) {
 }
 
 export async function deleteS3Files(keys) {
-  console.log("key:", keys);
+  // console.log("key:", keys);
 
   const command = new DeleteObjectsCommand({
     Bucket: "quickdrive-app",

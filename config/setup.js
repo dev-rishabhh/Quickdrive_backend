@@ -6,7 +6,7 @@ await connectDB();
 
 try {
     const db = mongoose.connection.db;
-    console.log("Schema addded to all collection");
+    // console.log("Schema addded to all collection");
 
     db.createCollection("users", {
         validator: {
@@ -128,7 +128,7 @@ try {
         }
     })
 
-    console.log("Schema addded to all collection");
+    // console.log("Schema addded to all collection");
 } catch (error) {
     console.log(error);
 

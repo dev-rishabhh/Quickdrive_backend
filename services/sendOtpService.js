@@ -4,7 +4,7 @@ import { otpModel } from "../model/otpModel.js"
 
 export async function SendOtpService(email) {
     const otp = Math.round(1000 + Math.random()* 9000)
-    console.log(otp);
+    // console.log(otp);
 
     await otpModel.findOneAndUpdate(
         { email },

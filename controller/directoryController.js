@@ -104,7 +104,7 @@ export async function handleDeleteDirectory(req, res, next) {
 
         if(files.length){
             const keys = files.map(({ _id, ext })=>({Key: `${_id}${ext}`}) )
-            console.log("keys:" ,keys);
+            // console.log("keys:" ,keys);
             await deleteS3Files(keys)
         }
         
