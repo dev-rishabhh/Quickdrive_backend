@@ -102,15 +102,12 @@ export async function handleDeleteDirectory(req, res, next) {
 
         const { files, directories } = await getDirectoryContents(id)
 
-        // files.map(async ({ _id, ext }) => {
-        //     await rm(`./storage/${_id}${ext}`)
-        // })
-        const keys = files.map(({ _id, ext })=>({Key: `${_id}${ext}`}) )
-        console.log(keys);
+        if(files.length){
+            const keys = files.map(({ _id, ext })=>({Key: `${_id}${ext}`}) )
+            console.log("keys:" ,keys);
+            await deleteS3Files(keys)
+        }
         
-        await deleteS3Files(keys)
-        
-
         await updateParentSize(dir.parentDirId, dir.size, "dec")
 
         await fileModel.deleteMany({ _id: { $in: files.map(({ _id, }) => _id) } })

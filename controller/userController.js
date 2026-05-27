@@ -20,7 +20,7 @@ export async function handleGetUser(req, res) {
 }
 
 export async function handleGetAllUsers(req, res) {
-    const users = await userModel.find({ deleted: false }).select("name email role").lean()
+    const users = await userModel.find({ deleted: false }).select("name email role picture").lean()
     const allSessions = await sessionModel.find().select("uid -_id").lean()
     const sessionsArray = allSessions.map(({ uid }) => { return uid.toString() })
 
